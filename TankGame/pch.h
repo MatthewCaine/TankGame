@@ -9,6 +9,17 @@
 #ifndef PCH_H
 #define PCH_H
 
-// TODO: add headers that you want to pre-compile here
+#include <vector>
+#include <thread>
+#include <memory>
+#include <iostream>
+#include <SFML/Graphics.hpp>
+#include "game.h"
+#include "game_rounds.h"
+#include "game_tanks.h"
+#include "tank.h"
+#include "round.h"
+#include "universal.h"
+#include <mutex>
 
 #endif //PCH_H

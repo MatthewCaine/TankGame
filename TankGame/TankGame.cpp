@@ -1,21 +1,67 @@
-// TankGame.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
+#pragma once
 #include "pch.h"
-#include <iostream>
 
 int main()
 {
-    std::cout << "Hello World!\n"; 
+
+	// creating the window displaying the game
+	sf::RenderWindow main_window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Hello World !", sf::Style::Default);
+	main_window.setVerticalSyncEnabled(true);
+	
+	GameElements the_game(main_window);  // creating everything the game consists of
+
+	// Initialize the pause message
+	sf::Text pauseMessage;
+	pauseMessage.setCharacterSize(100);
+	pauseMessage.setPosition(1200.f, 800.f);
+	pauseMessage.setFillColor(sf::Color::White);
+	pauseMessage.setString("Welcome to SFML pong!\nPress space to start the game");
+	pauseMessage.setStyle(sf::Text::Bold | sf::Text::Underlined);
+
+	bool is_playing = false;
+	// The loop in which the game is happening
+	while (main_window.isOpen())
+	{
+		sf::Event event;
+		while (main_window.pollEvent(event))
+		{
+			// Window closed or escape key pressed: exit
+			if ((event.type == sf::Event::Closed) ||
+				((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Escape)))
+			{
+				main_window.close();
+				break;
+			}
+
+			// Space key pressed: play
+			if ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Space))
+				if (!is_playing)
+				{
+					// (re)start the game
+					is_playing = true;
+					the_game.reset_tanks();
+				}	
+		}
+
+		main_window.clear(sf::Color::Black);
+
+		if (is_playing)
+		{
+			the_game.draw_map();
+			the_game.draw_tanks();
+			the_game.draw_rounds();
+			if (event.key.code == sf::Keyboard::LControl)
+				is_playing = false;
+		}
+		else
+		{
+			main_window.draw(pauseMessage);
+		}
+
+		main_window.display();
+	}
+
+	return EXIT_SUCCESS;
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
 
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
