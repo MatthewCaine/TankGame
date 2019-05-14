@@ -39,4 +39,7 @@ public:
 	void change_round_rotation(Round&);							  //changing rotation after collision
 
 	void reset_tanks();											  //Tanks go back to initial positions
+	void reset_rounds();
+
+	bool get_game_state() { return game_on; }					  // False if 1 tank left
 };

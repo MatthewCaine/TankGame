@@ -13,7 +13,8 @@ Round::Round(TANK i, sf::Vector2<float> pos, float rot) : ID(counter())
 	if(i == ONE)
 		round.setFillColor(sf::Color::Magenta);
 	else if(i == TWO)
-		round.setFillColor(sf::Color::Black);
+		round.setFillColor(sf::Color::Cyan);
+
 	round.setPosition(pos);
 	round.setRotation(rot);
 	tank_id = i;

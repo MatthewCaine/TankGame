@@ -30,11 +30,17 @@
 		{
 			return rounds[i].get_round();
 		}
+
 		int get_size() { return rounds.size(); }                      //Number of rounds active
 
 		Round &operator[](int i)
 		{
 			return rounds[i];
+		}
+
+		void clear()
+		{
+			rounds.clear();
 		}
 	};
 

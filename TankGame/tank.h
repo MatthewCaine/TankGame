@@ -18,7 +18,7 @@ private:
 	int ID;
 
 	std::string tank_name;
-	sf::Texture tank_texture;
+	sf::Texture * tank_texture;
 	sf::ConvexShape tank; //the tank itself
 	
 	bool is_playing = true;
@@ -34,7 +34,7 @@ public:
 	void set_position(float,float);
 
 	sf::ConvexShape *getTank();   // Sprite of Tank
-	sf::FloatRect *getBounds();   // bounds of Tank
+	sf::FloatRect getBounds();   // bounds of Tank
 	const sf::Vector2f &get_position();
 	const float &get_rotation();
 
@@ -48,6 +48,7 @@ public:
 	void move(MOVE);
 
 	void destroyed();
+	void reset();
 };
 
 

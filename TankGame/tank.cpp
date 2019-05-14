@@ -9,14 +9,15 @@ Tank::Tank(std::string name) : tank_name(name), ID(tank_counter()), is_playing(t
 
 void Tank::operator=(Tank* other)
 {
+	*tank_texture = std::move(*other->tank_texture);
 	is_playing = other->is_playing;
 	ID = other->ID;
 	tank_name = other->tank_name;
-	tank_texture = other->tank_texture;
 	tank = other->tank;
 }
 
-Tank::Tank(const Tank* other) : ID(other->ID), tank_name(other->tank_name), tank(other->tank), tank_texture(other->tank_texture), is_playing(other->is_playing) {}
+
+Tank::Tank(const Tank* other) : ID(other->ID), tank_name(other->tank_name), tank(other->tank), tank_texture(new sf::Texture(*other->tank_texture)), is_playing(other->is_playing) {}
 
 
 // getters
@@ -38,9 +39,9 @@ TANK Tank::get_id()
 	
 }
 
-sf::FloatRect *Tank::getBounds()
+sf::FloatRect Tank::getBounds()
 {
-	return &tank.getGlobalBounds();
+	return tank.getGlobalBounds();
 }
 
 sf::ConvexShape *Tank::getTank()
@@ -84,10 +85,21 @@ void Tank::set_position(float x, float y)
 // Used in constructors
 void Tank::drawTank()
 {
+	tank_texture = new sf::Texture();
 	// take tank texture
-	if (!tank_texture.loadFromFile("tank_1.jpg"))
+	if (get_id() == ONE)
 	{
-		exit(1);
+		if (!tank_texture->loadFromFile("tank_1.jpg"))
+		{
+			exit(1);
+		}
+	}
+	else if (get_id() == TWO)
+	{
+		if (!tank_texture->loadFromFile("tank_2.jpg"))
+		{
+			exit(1);
+		}
 	}
 
 	// resize it to 8 points
@@ -107,9 +119,9 @@ void Tank::drawTank()
 
 	// assign texture to the tank
 	if (get_id() == ONE)
-		tank.setFillColor(sf::Color(0, 255, 0));
+		tank.setTexture(tank_texture);
 	else if (get_id() == TWO)
-		tank.setFillColor(sf::Color(255, 0, 0));
+		tank.setTexture(tank_texture);
 
 
 }
@@ -155,4 +167,9 @@ void Tank::move(MOVE way)
 void Tank::destroyed()  // if the tank is hit player cannot do anything
 {
 	is_playing = false;
+}
+
+void Tank::reset()
+{ 
+	is_playing = true; 
 }

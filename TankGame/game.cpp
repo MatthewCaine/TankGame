@@ -30,7 +30,7 @@ void GameElements::interaction(TANK tank)
 		if (check_if_round_hits(tank, rounds[i]))
 		{
 			tanks[tank].destroyed();
-			std::cout << "HIT" << std::endl;
+			game_turn_off();			// if tank destroyed turns the game off
 		}
 	}
 
@@ -80,13 +80,13 @@ void GameElements::shoot(TANK tank)
 bool GameElements::check_if_tank_intersects(TANK tank)
 {
 	// THIS CHECKS IF ONE TANKS TOUCHES ANOTHER BUT CREATES A LOT OF BUGS
-	/*if(tank == ONE)
-		if ( tanks[tank].getBounds()->intersects( *tanks[TWO].getBounds() ))
+	if(tank == ONE)
+		if ( tanks[tank].getBounds().intersects(tanks[TWO].getBounds() ))
 			return true;
 
 	if (tank == TWO)
-		if (tanks[tank].getBounds()->intersects(*tanks[ONE].getBounds()))
-			return true;*/
+		if (tanks[tank].getBounds().intersects(tanks[ONE].getBounds()))
+			return true;
 
 	{
 		if (tanks[tank].get_position_x() <= 0)
@@ -126,13 +126,10 @@ bool GameElements::check_if_round_collides(Round& round)
 
 bool GameElements::check_if_round_hits(TANK tank, Round& round)
 {
-	if (round.get_bounds().intersects(*tanks[tank].getBounds()))
+	if (round.get_bounds().intersects(tanks[tank].getBounds()) && round.get_rounds_tank_id() != tanks[tank].get_id())
 	{
-		std::cout << "inter" << std::endl;
 		return true;
 	}
-
-	std::cout << "no inter" << std::endl;
 	return false;
 }
 
@@ -174,4 +171,11 @@ void GameElements::reset_tanks()
 {
 	tanks[ONE].set_position(300.f, 300.f);
 	tanks[TWO].set_position(2800.f, 1800.f);
+	tanks[ONE].reset();
+	tanks[TWO].reset();
+}
+
+void GameElements::reset_rounds()
+{
+	rounds.clear();
 }

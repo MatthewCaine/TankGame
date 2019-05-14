@@ -30,6 +30,7 @@ public:
 	float get_position_x();
 	float get_position_y();
 	float get_rotation();
+	TANK get_rounds_tank_id() { return tank_id; }
 };
 
 

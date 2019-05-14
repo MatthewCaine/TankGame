@@ -29,21 +29,21 @@ sf::ConvexShape &Tanks::get_tank(TANK x)
 	
 }
 
-sf::FloatRect &Tanks::get_bounds_of_tank(TANK x)
+sf::FloatRect Tanks::get_bounds_of_tank(TANK x)
 {
 	switch (x)
 	{
 	case ONE:
-		return *(Tanks::tanks[0].getBounds());
+		return (Tanks::tanks[0].getBounds());
 		break;
 	case TWO:
-		return *(Tanks::tanks[1].getBounds());
+		return (Tanks::tanks[1].getBounds());
 		break;
 	case THREE:
-		return *(Tanks::tanks[2].getBounds());
+		return (Tanks::tanks[2].getBounds());
 		break;
 	case FOUR:
-		return *(Tanks::tanks[3].getBounds());
+		return (Tanks::tanks[3].getBounds());
 		break;
 	default:
 		break;
