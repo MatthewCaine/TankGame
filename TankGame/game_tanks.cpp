@@ -7,7 +7,7 @@ void Tanks::add(std::string name)
 	Tanks::tanks.push_back(Tank(name));
 }
 
-sf::ConvexShape &Tanks::get_tank(TANK x)
+sf::Sprite &Tanks::get_tank(TANK x)
 {
 	switch (x)
 	{

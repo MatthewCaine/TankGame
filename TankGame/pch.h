@@ -21,5 +21,7 @@
 #include "round.h"
 #include "universal.h"
 #include <mutex>
+#include <map>
+#include "Collision.h"
 
 #endif //PCH_H

@@ -48,7 +48,7 @@ void GameElements::interaction(TANK tank)
 			tanks[tank].turn(LEFT);
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && !check_if_tank_intersects(tank))
 			tanks[tank].turn(RIGHT);
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::RControl) && CLOCK.restart().asSeconds() > 1.f)
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::RControl) )
 			shoot(tank);
 	}
 	else if (tanks[tank].get_id() == TWO)
@@ -65,7 +65,7 @@ void GameElements::interaction(TANK tank)
 			tanks[tank].turn(LEFT);
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 			tanks[tank].turn(RIGHT);
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && CLOCK.restart().asSeconds() > 1.f)
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) )
 			shoot(tank);
 	}
 }
@@ -81,11 +81,11 @@ bool GameElements::check_if_tank_intersects(TANK tank)
 {
 	// THIS CHECKS IF ONE TANKS TOUCHES ANOTHER BUT CREATES A LOT OF BUGS
 	if(tank == ONE)
-		if ( tanks[tank].getBounds().intersects(tanks[TWO].getBounds() ))
+		if ( Collision::PixelPerfectTest(*tanks[tank].getTank(), *tanks[TWO].getTank()) )
 			return true;
 
 	if (tank == TWO)
-		if (tanks[tank].getBounds().intersects(tanks[ONE].getBounds()))
+		if (Collision::PixelPerfectTest(*tanks[ONE].getTank(), *tanks[tank].getTank()))
 			return true;
 
 	{
@@ -126,7 +126,7 @@ bool GameElements::check_if_round_collides(Round& round)
 
 bool GameElements::check_if_round_hits(TANK tank, Round& round)
 {
-	if (round.get_bounds().intersects(tanks[tank].getBounds()) && round.get_rounds_tank_id() != tanks[tank].get_id())
+	if (Collision::PixelPerfectTest(*round.get_round(), *tanks[tank].getTank()) && round.get_rounds_tank_id() != tanks[tank].get_id())
 	{
 		return true;
 	}
@@ -137,7 +137,7 @@ void GameElements::change_round_rotation(Round& round)
 {
 	if (check_if_round_collides(round))                       // check if round collides with walls
 	{
-		round.set_rotation(round.get_rotation() - 180);   // change the rotation so it bounces off
+		round.set_rotation( sin(round.get_rotation() * 3.14159) * 180 );   // change the rotation so it bounces off
 	}
 }
 

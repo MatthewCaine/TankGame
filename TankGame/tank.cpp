@@ -39,22 +39,20 @@ TANK Tank::get_id()
 	
 }
 
-sf::FloatRect Tank::getBounds()
-{
-	return tank.getGlobalBounds();
-}
-
-sf::ConvexShape *Tank::getTank()
+sf::Sprite *Tank::getTank()
 {
 	return &tank;
 }
 
-const sf::Vector2f &Tank::get_position()
+const sf::Vector2f Tank::get_position()		// return the middle point of front of the tank (it's purely for shooting purposes)
 {
-	return tank.getPosition();
+	sf::Vector2f pos = tank.getPosition();
+	pos.y = pos.y + 298.3287 * sin(tank.getRotation()  * 3.14159 / 180);
+	pos.x = pos.x + 298.3287 * cos(tank.getRotation()  * 3.14159 / 180);
+	return pos;
 }
 
-const float &Tank::get_rotation()
+const float Tank::get_rotation()
 {
 	return tank.getRotation();
 }
@@ -68,6 +66,12 @@ float Tank::get_position_y()
 	return tank.getPosition().y;
 }
 
+
+sf::FloatRect Tank::getBounds()
+{
+	return tank.getGlobalBounds();
+}
+
 float Tank::get_local_bound_x()
 {
 	return tank.getLocalBounds().width;
@@ -76,6 +80,8 @@ float Tank::get_local_bound_y()
 {
 	return tank.getLocalBounds().height;
 }
+
+
 
 // setter
 void Tank::set_position(float x, float y)
@@ -89,41 +95,28 @@ void Tank::drawTank()
 	// take tank texture
 	if (get_id() == ONE)
 	{
-		if (!tank_texture->loadFromFile("tank_1.jpg"))
+		if (!tank_texture->loadFromFile("Textures/tank_1.png"))
 		{
 			exit(1);
 		}
 	}
 	else if (get_id() == TWO)
 	{
-		if (!tank_texture->loadFromFile("tank_2.jpg"))
+		if (!tank_texture->loadFromFile("Textures/tank_2.png"))
 		{
 			exit(1);
 		}
 	}
 
-	// resize it to 8 points
-	tank.setPointCount(9);
-
-	// define the points making tank shape
-	tank.setPoint(0, sf::Vector2f(210.f, 50.f));
-	tank.setPoint(1, sf::Vector2f(210.f, 60.f));
-	tank.setPoint(2, sf::Vector2f(150.f, 60.f));
-	tank.setPoint(3, sf::Vector2f(150.f, 100.f));
-	tank.setPoint(4, sf::Vector2f(0.f, 100.f));
-	tank.setPoint(5, sf::Vector2f(0.f, 0.f));
-	tank.setPoint(6, sf::Vector2f(150.f, 0.f));
-	tank.setPoint(7, sf::Vector2f(150.f, 40.f));
-	tank.setPoint(8, sf::Vector2f(210.f, 40.f));
-	tank.setOrigin(150.f, 50.f);
 
 	// assign texture to the tank
 	if (get_id() == ONE)
-		tank.setTexture(tank_texture);
+		tank.setTexture(*tank_texture);
 	else if (get_id() == TWO)
-		tank.setTexture(tank_texture);
+		tank.setTexture(*tank_texture);
 
-
+	tank.setTextureRect(sf::IntRect(0, 0, 290, 140));
+	tank.setOrigin(sf::Vector2f(0.f, 70.f));           // sets the operating point in the middle of back axis
 }
 
 int Tank::tank_counter()

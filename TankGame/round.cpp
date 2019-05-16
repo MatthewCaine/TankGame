@@ -9,11 +9,22 @@ int Round::counter()
 
 Round::Round(TANK i, sf::Vector2<float> pos, float rot) : ID(counter())
 {
-	round = sf::CircleShape(20.f);
-	if(i == ONE)
-		round.setFillColor(sf::Color::Magenta);
-	else if(i == TWO)
-		round.setFillColor(sf::Color::Cyan);
+	round_texture = new sf::Texture();
+	switch (i)
+	{
+	case ONE:
+		if (!Collision::CreateTextureAndBitmask(*round_texture, "Textures/round_1.png"))
+			exit(1);
+		break;
+
+	case TWO:
+		if (!Collision::CreateTextureAndBitmask(*round_texture, "Textures/round_2.png"))
+			exit(1);
+		break;
+
+	}
+
+	round.setTexture(*round_texture);
 
 	round.setPosition(pos);
 	round.setRotation(rot);
@@ -22,7 +33,7 @@ Round::Round(TANK i, sf::Vector2<float> pos, float rot) : ID(counter())
 
 
 // getters
-sf::CircleShape *Round::get_round()
+sf::Sprite *Round::get_round()
 {
 	return &round;
 }

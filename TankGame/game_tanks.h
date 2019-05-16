@@ -23,7 +23,7 @@ public:
 
 	void add(std::string);			  // adding tanks
 
-	sf::ConvexShape &get_tank(TANK);    // Sprite of tank
+	sf::Sprite &get_tank(TANK);    // Sprite of tank
 	sf::FloatRect get_bounds_of_tank(TANK);
 
 	Tank &operator[](TANK);

@@ -19,7 +19,7 @@ private:
 
 	std::string tank_name;
 	sf::Texture * tank_texture;
-	sf::ConvexShape tank; //the tank itself
+	sf::Sprite tank;					//the tank itself
 	
 	bool is_playing = true;
 
@@ -30,18 +30,21 @@ public:
 	Tank(const Tank*);
 	void operator=(Tank*);
 
-	void drawTank();              // Creation of the tank
+	void drawTank();						 // Creation of the tank
 	void set_position(float,float);
 
-	sf::ConvexShape *getTank();   // Sprite of Tank
-	sf::FloatRect getBounds();   // bounds of Tank
-	const sf::Vector2f &get_position();
-	const float &get_rotation();
+	// getters
+	sf::Sprite  *getTank();				// Sprite of Tank
+	const float get_rotation();
 
-	float get_position_x();
-	float get_position_y();
+	sf::FloatRect getBounds();				// bounds of Tank
 	float get_local_bound_x();
 	float get_local_bound_y();
+
+	const sf::Vector2f get_position();    // return the middle point of front of the tank (it's purely for shooting purposes)
+	float get_position_x();
+	float get_position_y();
+
 
 	// interactions with the tank
 	void turn(TURN);

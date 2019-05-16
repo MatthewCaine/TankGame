@@ -16,7 +16,8 @@ private:
 	static int counter();
 	int ID;
 	TANK tank_id;			//which tank shot it ?
-	sf::CircleShape round;
+	sf::Texture *round_texture;
+	sf::Sprite round;
 public:
 	Round(TANK,sf::Vector2<float>,float);
 
@@ -25,7 +26,7 @@ public:
 	void set_position(sf::Vector2<float>);
 
 	//getters
-	sf::CircleShape *get_round();
+	sf::Sprite *get_round();
 	sf::FloatRect get_bounds();
 	float get_position_x();
 	float get_position_y();

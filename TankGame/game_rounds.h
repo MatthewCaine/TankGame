@@ -26,7 +26,7 @@
 			rounds.push_back(Round(i, pos, rot));
 		}
 
-		sf::CircleShape *get_round(int i)                              // Sprite of tank
+		sf::Sprite *get_round(int i)                              // Sprite of tank
 		{
 			return rounds[i].get_round();
 		}
